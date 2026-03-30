@@ -18,6 +18,7 @@
   --accent2-dim: rgba(167, 139, 250, 0.12);
   --text: #e8eef5;
   --muted: #8b9cb3;
+  --success: #34d399;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
   --shadow-glow: 0 0 60px rgba(34, 211, 238, 0.08);
   --radius: 14px;
@@ -339,8 +340,8 @@ body::after {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(34, 211, 238, 0.7);
+  background: var(--success);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.7);
   animation: pulse-dot 2.4s ease-in-out infinite;
 }
 
@@ -359,6 +360,7 @@ body::after {
 .greeting {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.82rem;
+  font-weight: 800;
   color: var(--accent);
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -405,12 +407,9 @@ body::after {
 }
 
 .contact-info {
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.65rem;
-  width: 100%;
-  max-width: 28rem;
   margin: 1.85rem 0;
   opacity: 0;
   animation: fadeUp 0.65s 0.72s forwards;
@@ -422,8 +421,20 @@ body::after {
   gap: 0.5rem;
   font-size: 0.8rem;
   color: var(--muted);
-  width: 100%;
-  min-width: 0;
+}
+
+.contact-item--chip {
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(15, 22, 32, 0.5);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.contact-item--chip:hover {
+  border-color: rgba(34, 211, 238, 0.35);
+  background: rgba(34, 211, 238, 0.06);
+  transform: translateY(-1px);
 }
 
 .contact-item a {
@@ -454,8 +465,7 @@ body::after {
   padding: 0.78rem 1.75rem;
   font-size: 0.82rem;
   font-weight: 600;
-  font-family: inherit;
-  border-radius: 6px;
+  border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
@@ -468,11 +478,6 @@ body::after {
     border-color 0.2s ease;
   border: none;
   text-align: center;
-}
-
-button.btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
 }
 
 .btn-primary {
@@ -516,7 +521,7 @@ button.btn:focus-visible {
   position: absolute;
   inset: -12px;
   border-radius: 50%;
-  border: 6px solid transparent;
+  border: 2px solid transparent;
   background: linear-gradient(135deg, var(--accent), var(--accent2)) border-box;
   -webkit-mask:
     linear-gradient(#fff 0 0) padding-box,
@@ -553,37 +558,14 @@ button.btn:focus-visible {
 
 .section {
   padding: clamp(4rem, 10vw, 6.5rem) 0;
-  background: transparent;
 }
 
 .experience-section {
-  background: transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Blur layer sits above canvas (through transparent main-content) but below section content */
-.experience-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  transform: translateZ(0);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  background: rgba(7, 11, 16, 0.42);
-  border-top: 1px solid rgba(34, 211, 238, 0.1);
-  border-bottom: 1px solid rgba(34, 211, 238, 0.1);
-}
-
-.experience-section > * {
-  position: relative;
-  z-index: 1;
+  background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
 }
 
 .projects-section {
-  background: transparent;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%);
 }
 
 .section-title {
@@ -701,9 +683,9 @@ button.btn:focus-visible {
 .experience-period {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.72rem;
-  color: var(--accent);
-  background: var(--accent-dim);
-  border: 1px solid rgba(34, 211, 238, 0.28);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   padding: 0.3rem 0.65rem;
   border-radius: 999px;
   display: inline-block;
@@ -816,28 +798,7 @@ button.btn:focus-visible {
 }
 
 .skills-section {
-  background: transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.skills-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  transform: translateZ(0);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  background: rgba(7, 11, 16, 0.42);
-  border-top: 1px solid rgba(34, 211, 238, 0.1);
-  border-bottom: 1px solid rgba(34, 211, 238, 0.1);
-}
-
-.skills-section > * {
-  position: relative;
-  z-index: 1;
+  background: var(--bg);
 }
 
 .skills-grid {
@@ -847,76 +808,55 @@ button.btn:focus-visible {
   margin-bottom: 1.5rem;
 }
 
-.skill-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.25s ease;
-}
-
-.skill-card:hover {
-  border-color: rgba(34, 211, 238, 0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-}
-
 .skill-card-wide {
   grid-column: 1 / -1;
 }
 
-.skill-category {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
+.skills-grid > .skill-card-wide {
+  margin-top: 80px;
+}
+
+.skill-tags--devops {
+  gap: 0.5rem;
+}
+
+/* Featured Projects–style .tag + logo row */
+.tag.skill-devops-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.65rem 0.28rem 0.45rem;
+}
+
+.skill-devops-chip__logo {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+.skill-devops-chip__logo--wide {
+  width: auto;
+  max-width: 3.5rem;
+  max-height: 18px;
+}
+
+.skill-devops-chip__icon {
+  flex-shrink: 0;
   color: var(--accent);
-  margin-bottom: 0.85rem;
-  font-weight: 600;
 }
 
-.skill-tags {
+.skill-devops-chip__name {
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.education-stack {
+  margin-top: 0.75rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.skill-tag {
-  font-size: 0.78rem;
-  padding: 0.32rem 0.72rem;
-  border-radius: 999px;
-  background: var(--accent-dim);
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  color: var(--text);
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.skill-tag:hover {
-  border-color: rgba(34, 211, 238, 0.35);
-  background: rgba(34, 211, 238, 0.08);
-}
-
-.education-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.85rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
-}
-
-.education-card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .education-content {
@@ -925,7 +865,11 @@ button.btn:focus-visible {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 1rem;
+}
+
+.education-content--next {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }
 
 .education-degree {
@@ -944,17 +888,6 @@ button.btn:focus-visible {
   text-align: right;
 }
 
-.education-date {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.74rem;
-  color: var(--accent);
-  background: var(--accent-dim);
-  border: 1px solid rgba(34, 211, 238, 0.28);
-  padding: 0.3rem 0.65rem;
-  border-radius: 999px;
-  display: inline-block;
-}
-
 .education-location {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.72rem;
@@ -964,7 +897,8 @@ button.btn:focus-visible {
 
 .contact-section {
   text-align: center;
-  background: transparent;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(34, 211, 238, 0.06), transparent 55%),
+    var(--bg);
 }
 
 .contact-title {
@@ -1021,7 +955,7 @@ button.btn:focus-visible {
   text-align: center;
   padding: 2.25rem;
   border-top: 1px solid var(--border);
-  background: transparent;
+  background: rgba(15, 22, 32, 0.35);
 }
 
 .footer-text {

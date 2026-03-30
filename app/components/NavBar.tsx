@@ -1,16 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-
-const links = [
-  { href: "#home", label: "Home" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
-  { href: "#contact", label: "Contact" },
-] as const;
-
-const SECTION_IDS = links.map((l) => l.href.replace("#", ""));
+import { NAV_LINKS, SECTION_IDS } from "../lib/navigation";
 
 /** Document Y of section top (works even when offsetParent ≠ document) */
 function sectionDocumentTop(el: HTMLElement): number {
@@ -56,6 +47,7 @@ export function NavBar() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- scroll spy initial sync
     updateActiveFromScroll();
     window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
     window.addEventListener("resize", updateActiveFromScroll);
@@ -68,6 +60,7 @@ export function NavBar() {
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
     if (hash && SECTION_IDS.includes(hash as (typeof SECTION_IDS)[number])) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- hash deep-link on load
       setActive(hash);
     }
   }, []);
@@ -109,7 +102,7 @@ export function NavBar() {
           className={`nav-links ${open ? "nav-links--open" : ""}`}
           id="nav-links"
         >
-          {links.map(({ href, label }) => {
+          {NAV_LINKS.map(({ href, label }) => {
             const id = href.replace("#", "");
             return (
               <a
